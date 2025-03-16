@@ -41,7 +41,7 @@ def analysis_res(log_entries):
     }
 
 def main():
-    file_path = 'firelog.log'  # Ensure this file exists
+    file_path = 'firelog.log'  
     logs = createlog(file_path)
     analysis = analysis_res(logs)
 
