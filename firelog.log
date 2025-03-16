@@ -1,0 +1,116 @@
+Timestamp: 2025-03-16 15:30:45
+Source IP: 192.168.1.10
+Destination IP: 8.8.8.8
+Protocol: TCP
+Source Port: 54321
+Destination Port: 443
+Action: Blocked
+Reason: Suspicious outgoing connection attempt
+
+Timestamp: 2025-03-16 15:31:12
+Source IP: 192.168.1.15
+Destination IP: 13.107.21.200
+Protocol: UDP
+Source Port: 57834
+Destination Port: 53
+Action: Allowed
+Reason: DNS Query
+
+Timestamp: 2025-03-16 15:31:45
+Source IP: 192.168.1.20
+Destination IP: 185.60.218.35
+Protocol: TCP
+Source Port: 48291
+Destination Port: 443
+Action: Allowed
+Reason: Secure web traffic
+
+Timestamp: 2025-03-16 15:32:05
+Source IP: 192.168.1.5
+Destination IP: 203.0.113.45
+Protocol: TCP
+Source Port: 60022
+Destination Port: 22
+Action: Blocked
+Reason: Unauthorized SSH attempt
+
+Timestamp: 2025-03-16 15:32:18
+Source IP: 192.168.1.8
+Destination IP: 104.244.42.129
+Protocol: TCP
+Source Port: 49612
+Destination Port: 80
+Action: Blocked
+Reason: Unencrypted web traffic blocked by policy
+
+Timestamp: 2025-03-16 15:32:45
+Source IP: 192.168.1.30
+Destination IP: 172.217.10.4
+Protocol: TCP
+Source Port: 51234
+Destination Port: 443
+Action: Allowed
+Reason: Secure web browsing
+
+Timestamp: 2025-03-16 15:33:10
+Source IP: 192.168.1.12
+Destination IP: 198.51.100.75
+Protocol: TCP
+Source Port: 49876
+Destination Port: 25
+Action: Blocked
+Reason: Outbound SMTP traffic restricted
+
+Timestamp: 2025-03-16 15:33:25
+Source IP: 192.168.1.25
+Destination IP: 151.101.129.140
+Protocol: TCP
+Source Port: 54322
+Destination Port: 443
+Action: Allowed
+Reason: Web browsing
+
+Timestamp: 2025-03-16 15:34:00
+Source IP: 192.168.1.18
+Destination IP: 192.168.1.1
+Protocol: ICMP
+Source Port: N/A
+Destination Port: N/A
+Action: Allowed
+Reason: Ping request
+
+Timestamp: 2025-03-16 15:34:30
+Source IP: 192.168.1.22
+Destination IP: 192.168.1.254
+Protocol: UDP
+Source Port: 34567
+Destination Port: 67
+Action: Allowed
+Reason: DHCP request
+
+Timestamp: 2025-03-16 15:35:00
+Source IP: 192.168.1.40
+Destination IP: 203.0.113.80
+Protocol: TCP
+Source Port: 49152
+Destination Port: 3389
+Action: Blocked
+Reason: RDP access denied by policy
+
+Timestamp: 2025-03-16 15:35:30
+Source IP: 192.168.1.6
+Destination IP: 64.233.177.113
+Protocol: TCP
+Source Port: 53100
+Destination Port: 443
+Action: Allowed
+Reason: Web traffic
+
+Timestamp: 2025-03-16 15:36:00
+Source IP: 192.168.1.50
+Destination IP: 45.33.32.156
+Protocol: TCP
+Source Port: 61234
+Destination Port: 8080
+Action: Blocked
+Reason: Suspicious proxy attempt
