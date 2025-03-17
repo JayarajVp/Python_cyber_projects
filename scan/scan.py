@@ -1,5 +1,5 @@
 import shodan 
-api_key="6RCYp8g48QMo3E2pUYLRvex3pj5MuNjY"
+api_key="" #add you'r API key
 def scan(domain):
     try:
         shodan_api= shodan.Shodan(api_key)
@@ -12,4 +12,4 @@ def scan(domain):
             print(f"- {item}")
     except shodan.APIError as e:
         print(f"Error: {e}")
-scan("")
+scan("") #enter IP of target
