@@ -12,4 +12,4 @@ def scan(domain):
             print(f"- {item}")
     except shodan.APIError as e:
         print(f"Error: {e}")
-scan("173.245.59.113")
+scan("")
