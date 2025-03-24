@@ -1,42 +1,58 @@
 import socket
+import threading
 from cryptography.fernet import Fernet
 
 def start_server(host, port):
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server_socket.bind((host, port))
     server_socket.listen(1)
-    print("Server started, waiting for connection...")
+    print("Server started, waiting for connection.")
 
     conn, addr = server_socket.accept()
     print(f"Connected to {addr}")
 
     send_key(conn)  
-    print("Key exchanged successfully.")
+    print("🔑 Key exchanged successfully.")
 
-    while True:
-        try:
-            data = conn.recv(1024)
-            if not data:
+    def receive_messages():
+        while True:
+            try:
+                data = conn.recv(1024)
+                if not data:
+                    break
+                decrypted_data = c_decrypt(data)
+                print(f"Client: {decrypted_data}")
+
+                if decrypted_data.lower() == "exit":
+                    print("Client exited. Closing connection.")
+                    conn.close()
+                    server_socket.close()
+                    return
+
+            except ConnectionResetError:
+                print("Connection lost!")
                 break
 
-            decrypted_data = c_decrypt(data)
-            print(f"Client: {decrypted_data}")
+    def send_messages():
+        while True:
+            message = input("\nServer: ")
+            encrypted_message = c_encrypt(message)
+            conn.send(encrypted_message)
 
-            if decrypted_data.lower() == "exit":
-                print("Exiting chat...")
-                break
+            if message.lower() == "exit":
+                print("Server exiting...")
+                conn.close()
+                server_socket.close()
+                return
 
-            server_response = input("Server: ")
-            encrypted_response = c_encrypt(server_response)
-            conn.send(encrypted_response)
+    receive_thread = threading.Thread(target=receive_messages)
+    send_thread = threading.Thread(target=send_messages)
 
-        except ConnectionResetError:
-            print("Connection lost, retrying.")
-            break
+    receive_thread.start()
+    send_thread.start()
 
-    conn.close()
-    server_socket.close()
-    print("Server closed.")
+    receive_thread.join()
+    send_thread.join()
 
 def send_key(conn):
     with open("main_key.key", "rb") as key_file:

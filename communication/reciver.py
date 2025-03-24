@@ -1,28 +1,53 @@
 import socket
+import threading
 from cryptography.fernet import Fernet
 
 def start_receiver(server_ip, port):
     receiver_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     receiver_socket.connect((server_ip, port))
     print(f"Connected to server: {server_ip}")
+
+    # Receive the encrypted session key from server
     session_key = receive_key(receiver_socket)
-    print("Key exchanged successfully.")
+    print(" Key exchanged successfully! Now you can start the conversation.")
 
-    while True:
-        message = input("You: ")
-        encrypted_message = encrypt_message(message, session_key)
-        receiver_socket.send(encrypted_message)
+    def receive_messages():
+        while True:
+            try:
+                server_response = receiver_socket.recv(1024)
+                if not server_response:
+                    break
+                decrypted_response = decrypt_message(server_response, session_key)
+                print(f"Server: {decrypted_response}")
 
-        if message.lower() == "exit":
-            print("Exiting chat.")
-            break
+                if decrypted_response.lower() == "exit":
+                    print("Server exited. Closing connection...")
+                    receiver_socket.close()
+                    return
 
-        server_response = receiver_socket.recv(1024)
-        decrypted_response = decrypt_message(server_response, session_key)
-        print(f"Server: {decrypted_response}")  
+            except ConnectionResetError:
+                print("Connection lost!")
+                break
 
-    receiver_socket.close()
-    print("Connection closed.")
+    def send_messages():
+        while True:
+            message = input("\nYou: ")
+            encrypted_message = encrypt_message(message, session_key)
+            receiver_socket.send(encrypted_message)
+
+            if message.lower() == "exit":
+                print("Client exiting.")
+                receiver_socket.close()
+                return
+
+    receive_thread = threading.Thread(target=receive_messages)
+    send_thread = threading.Thread(target=send_messages)
+
+    receive_thread.start()
+    send_thread.start()
+
+    receive_thread.join()
+    send_thread.join()
 
 def receive_key(sock):
     with open("main_key.key", "rb") as key_file:
