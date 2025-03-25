@@ -12,7 +12,7 @@ def start_server(host, port):
     print(f"Connected to {addr}")
 
     send_key(conn)  
-    print("🔑 Key exchanged successfully.")
+    print("Key exchanged successfully.")
 
     def receive_messages():
         while True:
