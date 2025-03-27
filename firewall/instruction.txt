@@ -1,0 +1,8 @@
+Download WinDivert
+Move WinDivert.dll, WinDivert64.sys, and WinDivert32.sys to the same directory as your script.
+pip install pydivert
+python firewall.py
+
+netsh interface ipv4 set interface "Ethernet" forwarding=enabled
+netsh interface ipv4 set interface "Wi-Fi" forwarding=enabled
+
